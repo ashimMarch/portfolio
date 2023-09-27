@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTextStyle {
-  static TextStyle headerTextStyle({Color color = Colors.white}) {
-    return GoogleFonts.signikaNegative(
-      fontSize: 18,
-      fontWeight: FontWeight.w600,
+  static TextStyle headerTextStyle({Color color = Colors.white, double fontSize = 15}) {
+    return GoogleFonts.poppins(
+      fontSize: fontSize,
+      fontWeight: FontWeight.w500,
       color: color,
     );
   }
   static TextStyle montserratStyle({Color color = Colors.white, double fontSize = 24}) {
-    return GoogleFonts.signikaNegative(
+    return GoogleFonts.poppins(
       fontSize: fontSize,
-      fontWeight: FontWeight.w800,
+      fontWeight: FontWeight.w600,
       color: color,
     );
     // return GoogleFonts.yesevaOne(
@@ -23,7 +23,7 @@ class AppTextStyle {
   }
 
   static TextStyle headingStyle({double fontSize = 36, Color color = Colors.white}) {
-    return GoogleFonts.signikaNegative(
+    return GoogleFonts.poppins(
       fontSize: fontSize,
       fontWeight: FontWeight.bold,
       color:  color,
@@ -31,7 +31,7 @@ class AppTextStyle {
     );
   }
   static TextStyle normalStyle({double fontSize = 16, Color color = Colors.white}) {
-    return GoogleFonts.signikaNegative(
+    return GoogleFonts.poppins(
       fontSize: fontSize,
       fontWeight: FontWeight.w500,
       color:  color,
@@ -39,7 +39,7 @@ class AppTextStyle {
     );
   }
   static TextStyle comfortaaStyle() {
-    return GoogleFonts.signikaNegative(
+    return GoogleFonts.poppins(
         fontSize: 18, fontWeight: FontWeight.w800, color: Colors.grey);
   }
 }

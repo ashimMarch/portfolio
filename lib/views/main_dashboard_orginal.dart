@@ -1,10 +1,14 @@
+import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_portfolio/views/about_me.dart';
 import 'package:my_portfolio/views/home_page.dart';
 import 'package:my_portfolio/views/my_projects.dart';
 import 'package:my_portfolio/views/my_services.dart';
-import '../globals/app_colors.dart';
+import '../blocs/main_menu_cubit/main_menu_cubit.dart';
+import '../globals/palette.dart';
 import '../globals/app_text_style.dart';
 import '../globals/constants.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -12,36 +16,50 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 class MainDashBoardOrginal extends StatefulWidget {
   const MainDashBoardOrginal({Key? key}) : super(key: key);
 
+
   @override
   State<MainDashBoardOrginal> createState() => _MainDashBoardOrginalState();
 }
 
 class _MainDashBoardOrginalState extends State<MainDashBoardOrginal> {
   final ItemScrollController _itemScrollController = ItemScrollController();
-  final ScrollOffsetController _scrollOffsetController = ScrollOffsetController();
-  final ItemPositionsListener _itemPositionsListener = ItemPositionsListener.create();
+  final ScrollOffsetController _scrollOffsetController =
+      ScrollOffsetController();
+  final ItemPositionsListener _itemPositionsListener =
+      ItemPositionsListener.create();
   final onMenuHover = Matrix4.identity()..scale(1.0);
+  Timer? _debounce;
   final menuItems = <String>[
     'Home',
     'About',
     'Services',
     'Portfolio',
-    // 'Contact',
   ];
 
-  var menuIndex = 0;
+  int currentIndex = 0;
 
   List<Widget> screensList = [];
-  
+
   @override
   void initState() {
     super.initState();
-    screensList = const <Widget>[
-      HomePage(),
-      AboutMe(),
-      MyServices(),
-      MyProjects(),
+    screensList = <Widget>[
+      const HomePage(),
+      AboutMe(itemScrollController: _itemScrollController),
+      const MyServices(),
+      const MyProjects(),
     ];
+    
+  }
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _itemPositionsListener.itemPositions.addListener(() {
+      final indx = _itemPositionsListener.itemPositions.value.first.index;
+      if ( indx != currentIndex) {
+        context.read<MainMenuCubit>().onSelectedMenu(indx);
+      }
+    });
   }
 
   Future scrollTo({required int index}) async {
@@ -51,21 +69,17 @@ class _MainDashBoardOrginalState extends State<MainDashBoardOrginal> {
             duration: const Duration(seconds: 2),
             curve: Curves.fastLinearToSlowEaseIn)
         .whenComplete(() {
-      setState(() {
-        menuIndex = index;
-      });
+        context.read<MainMenuCubit>().onSelectedMenu(index);
     });
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: AppColors.bgColor,
+      backgroundColor: Palette.bgColor,
       appBar: AppBar(
-        backgroundColor: AppColors.bgColor,
+        backgroundColor: Palette.bgColor,
         toolbarHeight: 90,
         titleSpacing: 40,
         elevation: 0,
@@ -77,17 +91,21 @@ class _MainDashBoardOrginalState extends State<MainDashBoardOrginal> {
                   return Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      const Text('Portfolio'),
+                      const Text(
+                        'Portfolio.',
+                        style: TextStyle(color: Palette.mainColor),
+                      ),
                       const Spacer(),
                       PopupMenuButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.menu_sharp,
                           size: 32,
-                          color: AppColors.white,
+                          color: Palette.whiteColor,
                         ),
-                        color: AppColors.bgColor2,
+                        color: Palette.mainColor,
                         position: PopupMenuPosition.under,
-                        constraints: BoxConstraints.tightFor(width: size.width * 0.9),
+                        constraints:
+                            BoxConstraints.tightFor(width: size.width * 0.9),
                         itemBuilder: (BuildContext context) => menuItems
                             .asMap()
                             .entries
@@ -108,36 +126,47 @@ class _MainDashBoardOrginalState extends State<MainDashBoardOrginal> {
                   return Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      const Text('Portfolio'),
+                      const Text(
+                        'Portfolio.',
+                        style: TextStyle(color: Palette.mainColor),
+                      ),
                       const Spacer(),
-                      SizedBox(
-                        height: 30,
-                        child: ListView.separated(
-                          itemCount: menuItems.length,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          separatorBuilder: (context, child) =>
-                              Constants.sizedBox(width: 8),
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                              onTap: () {
-                                scrollTo(index: index);
+                      BlocBuilder<MainMenuCubit, MainMenuState>(
+                        builder: (context, state) {
+                          currentIndex = (state as MainMenuSelectdState).index;
+                          return SizedBox(
+                            height: 30,
+                            child: ListView.separated(
+                              itemCount: menuItems.length,
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              separatorBuilder: (context, child) =>
+                                  Constants.sizedBox(width: 8),
+                              itemBuilder: (context, index) {
+                                return InkWell(
+                                  onTap: () {
+                                    scrollTo(index: index);
+                                  },
+                                  borderRadius: BorderRadius.circular(100),
+                                  onHover: (value) {
+                                    if (value) {
+                                        if (_debounce?.isActive ?? false) {
+                                          _debounce?.cancel();
+                                        }
+                                        context.read<MainMenuCubit>().onHoverMenu(value: value, hoveredIndex: index);
+                                    } else {
+                                        _debounce = Timer(const Duration(milliseconds: 500), () {
+                                            context.read<MainMenuCubit>().onHoverMenu(value: value, hoveredIndex: index);
+                                        });
+                                    }
+                                  },
+                                  child: buildNavBarAnimatedContainer(index,
+                                      currentIndex == index ? true : false),
+                                );
                               },
-                              borderRadius: BorderRadius.circular(100),
-                              onHover: (value) {
-                                setState(() {
-                                  if (value) {
-                                    menuIndex = index;
-                                  } else {
-                                    menuIndex = 0;
-                                  }
-                                });
-                              },
-                              child: buildNavBarAnimatedContainer(
-                                  index, menuIndex == index ? true : false),
-                            );
-                          },
-                        ),
+                            ),
+                          );
+                        },
                       ),
                       Constants.sizedBox(width: 30),
                     ],
@@ -168,8 +197,15 @@ class _MainDashBoardOrginalState extends State<MainDashBoardOrginal> {
       child: Text(
         menuItems[index],
         style: AppTextStyle.headerTextStyle(
-            color: hover ? AppColors.themeColor : AppColors.white),
+          color: hover ? Palette.mainColor : Palette.whiteColor,
+        ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
   }
 }

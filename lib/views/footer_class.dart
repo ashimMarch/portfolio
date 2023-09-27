@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_portfolio/globals/app_colors.dart';
+import 'package:my_portfolio/globals/palette.dart';
 
 class FooterClass extends StatelessWidget {
   const FooterClass({
@@ -11,7 +11,7 @@ class FooterClass extends StatelessWidget {
     return Container(
       height: 70,
       width: MediaQuery.of(context).size.width,
-      color: AppColors.bgColor2,
+      color: Palette.bgColor,
       alignment: Alignment.centerRight,
       padding: const EdgeInsets.symmetric(
         horizontal: 40,
@@ -23,7 +23,7 @@ class FooterClass extends StatelessWidget {
           width: 40,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: AppColors.themeColor),
+              color: Palette.mainColor),
           child: const Icon(
             Icons.arrow_upward,
             size: 25,

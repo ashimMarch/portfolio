@@ -1,8 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:my_portfolio/contents/my_contents.dart';
-import 'package:my_portfolio/globals/app_assets.dart';
-import 'package:my_portfolio/globals/app_colors.dart';
+import 'package:my_portfolio/contents/my_contents.dart' show myServicesMap, ServiceType;
+import 'package:my_portfolio/globals/palette.dart';
 import 'package:my_portfolio/globals/constants.dart';
 
 import '../globals/app_text_style.dart';
@@ -17,66 +16,72 @@ class MyServices extends StatefulWidget {
 }
 
 class _MyServicesState extends State<MyServices> {
-  bool isApp = false, isGraphic = false, isDataAnalyst = false;
+  late ValueNotifier<ServiceType?> _onTapNotifier;
+  bool isApp = false, iOS = false, web = false;
 
   final onHoverActive = Matrix4.identity()..translate(0, -10, 0);
   final onHoverRemove = Matrix4.identity()..translate(0, 0, 0);
 
-
+@override
+void initState() {
+  super.initState();
+  _onTapNotifier = ValueNotifier(null);
+}
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return HelperClass(
-      mobile: Column(
-        // mainAxisSize: MainAxisSize.min,
-        children: [
-          buildMyServicesText(),
-          Constants.sizedBox(height: 60.0),
-          InkWell(
-            onTap: () {},
-            onHover: (value) {
-              setState(() {
-                isApp = value;
-              });
-            },
-            child: buildAnimatedContainer(
-              title: 'Android Development',
-              body: MyContents.android,
-              asset: AppAssets.logoAndroid,
-              hover: isApp,
-            ),
-          ),
-          Constants.sizedBox(height: 24.0),
-          InkWell(
-            onTap: () {},
-            onHover: (value) {
-              setState(() {
-                isGraphic = value;
-              });
-            },
-            child: buildAnimatedContainer(
-              title: 'iOS Development',
-              body: MyContents.iOS,
-              asset: AppAssets.logoiOS,
-              hover: isGraphic,
-            ),
-          ),
-          Constants.sizedBox(height: 24.0),
-          InkWell(
-            onTap: () {},
-            onHover: (value) {
-              setState(() {
-                isDataAnalyst = value;
-              });
-            },
-            child: buildAnimatedContainer(
-              title: 'Web Development',
-              body: MyContents.web,
-              asset: AppAssets.logoWeb,
-              hover: isDataAnalyst,
-            ),
-          )
-        ],
+      mobile: ValueListenableBuilder(
+        valueListenable: _onTapNotifier,
+        builder: (context, selectedService, _) {
+          return Column(
+            children: [
+              buildMyServicesText(),
+              Constants.sizedBox(height: 60.0),
+              InkWell(
+                onTap: () {
+                  isApp = true;
+                  iOS = web = false;
+                  _onTapNotifier.value = ServiceType.android;
+                },
+                child: buildAnimatedContainer(
+                  asset: myServicesMap[ServiceType.android]!.icon,
+                  title: myServicesMap[ServiceType.android]!.title,
+                  body: myServicesMap[ServiceType.android]!.content,
+                  hover: isApp,
+                ),
+              ),
+              Constants.sizedBox(height: 24.0),
+              InkWell(
+                onTap: () {
+                  iOS = true;
+                  isApp = web = false;
+                  _onTapNotifier.value = ServiceType.iOS;
+                },
+                child: buildAnimatedContainer(
+                  asset: myServicesMap[ServiceType.iOS]!.icon,
+                  title: myServicesMap[ServiceType.iOS]!.title,
+                  body: myServicesMap[ServiceType.iOS]!.content,
+                  hover: iOS,
+                ),
+              ),
+              Constants.sizedBox(height: 24.0),
+              InkWell(
+                onTap: () {
+                  web = true;
+                  isApp = iOS = false;
+                  _onTapNotifier.value = ServiceType.web;
+                },
+                child: buildAnimatedContainer(
+                  asset: myServicesMap[ServiceType.web]!.icon,
+                  title: myServicesMap[ServiceType.web]!.title,
+                  body: myServicesMap[ServiceType.web]!.content,
+                  hover: web,
+                ),
+              )
+            ],
+          );
+        }
       ),
       tablet: Column(
         mainAxisSize: MainAxisSize.min,
@@ -94,9 +99,9 @@ class _MyServicesState extends State<MyServices> {
                   });
                 },
                 child: buildAnimatedContainer(
-                  title: 'Android Development',
-                  body: MyContents.android,
-                  asset: AppAssets.logoAndroid,
+                  asset: myServicesMap[ServiceType.android]!.icon,
+                  title: myServicesMap[ServiceType.android]!.title,
+                  body: myServicesMap[ServiceType.android]!.content,
                   hover: isApp,
                 ),
               ),
@@ -105,14 +110,14 @@ class _MyServicesState extends State<MyServices> {
                 onTap: () {},
                 onHover: (value) {
                   setState(() {
-                    isGraphic = value;
+                    iOS = value;
                   });
                 },
                 child: buildAnimatedContainer(
-                  title: 'iOS Development',
-                  body: MyContents.iOS,
-                  asset: AppAssets.logoiOS,
-                  hover: isGraphic,
+                  asset: myServicesMap[ServiceType.iOS]!.icon,
+                  title: myServicesMap[ServiceType.iOS]!.title,
+                  body: myServicesMap[ServiceType.iOS]!.content,
+                  hover: iOS,
                 ),
               ),
             ],
@@ -122,14 +127,14 @@ class _MyServicesState extends State<MyServices> {
             onTap: () {},
             onHover: (value) {
               setState(() {
-                isDataAnalyst = value;
+                web = value;
               });
             },
             child: buildAnimatedContainer(
-              title: 'Web Development',
-              body: MyContents.web,
-              asset: AppAssets.logoWeb,
-              hover: isDataAnalyst,
+              asset: myServicesMap[ServiceType.web]!.icon,
+              title: myServicesMap[ServiceType.web]!.title,
+              body: myServicesMap[ServiceType.web]!.content,
+              hover: web,
               width: 725.0,
               hoverWidth: 735.0,
             ),
@@ -152,9 +157,9 @@ class _MyServicesState extends State<MyServices> {
                   });
                 },
                 child: buildAnimatedContainer(
-                  title: 'Android Development',
-                  body: MyContents.android,
-                  asset: AppAssets.logoAndroid,
+                  asset: myServicesMap[ServiceType.android]!.icon,
+                  title: myServicesMap[ServiceType.android]!.title,
+                  body: myServicesMap[ServiceType.android]!.content,
                   hover: isApp,
                 ),
               ),
@@ -163,14 +168,14 @@ class _MyServicesState extends State<MyServices> {
                 onTap: () {},
                 onHover: (value) {
                   setState(() {
-                    isGraphic = value;
+                    iOS = value;
                   });
                 },
                 child: buildAnimatedContainer(
-                  title: 'iOS Development',
-                  body: MyContents.iOS,
-                  asset: AppAssets.logoiOS,
-                  hover: isGraphic,
+                  asset: myServicesMap[ServiceType.iOS]!.icon,
+                  title: myServicesMap[ServiceType.iOS]!.title,
+                  body: myServicesMap[ServiceType.iOS]!.content,
+                  hover: iOS,
                 ),
               ),
               Constants.sizedBox(width: 24.0),
@@ -178,14 +183,14 @@ class _MyServicesState extends State<MyServices> {
                 onTap: () {},
                 onHover: (value) {
                   setState(() {
-                    isDataAnalyst = value;
+                    web = value;
                   });
                 },
                 child: buildAnimatedContainer(
-                  title: 'Web Development',
-                  body: MyContents.web,
-                  asset: AppAssets.logoWeb,
-                  hover: isDataAnalyst,
+                  asset: myServicesMap[ServiceType.web]!.icon,
+                  title: myServicesMap[ServiceType.web]!.title,
+                  body: myServicesMap[ServiceType.web]!.content,
+                  hover: web,
                 ),
               )
             ],
@@ -193,7 +198,7 @@ class _MyServicesState extends State<MyServices> {
         ],
       ),
       paddingWidth: size.width * 0.04,
-      bgColor: AppColors.bgColor,
+      bgColor: Palette.bgColor,
     );
   }
 
@@ -208,7 +213,7 @@ class _MyServicesState extends State<MyServices> {
             TextSpan(
               text: 'Services',
               style: AppTextStyle.headingStyle(
-                  fontSize: 30.0, color: AppColors.robinEdgeBlue),
+                  fontSize: 30.0, color: Palette.mainColor),
             )
           ],
         ),
@@ -232,16 +237,14 @@ class _MyServicesState extends State<MyServices> {
       transform: hover ? onHoverActive : onHoverRemove,
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 24),
       decoration: BoxDecoration(
-        color: AppColors.bgColor2,
+        color: Palette.bgColor,
         borderRadius: BorderRadius.circular(30),
-        border:
-            hover ? Border.all(color: AppColors.themeColor, width: 3) : null,
+        border: hover ? Border.all(color: Palette.mainColor, width: 3) : null,
         boxShadow: const [
           BoxShadow(
             color: Colors.black54,
-            spreadRadius: 4.0,
-            blurRadius: 4.5,
-            offset: Offset(3.0, 4.5),
+            spreadRadius: 5.0,
+            blurRadius: 10,
           )
         ],
       ),
@@ -251,7 +254,7 @@ class _MyServicesState extends State<MyServices> {
             asset,
             width: 50,
             height: 50,
-            color: AppColors.themeColor,
+            color: Palette.mainColor,
           ),
           Constants.sizedBox(height: 30.0),
           Text(
@@ -262,7 +265,7 @@ class _MyServicesState extends State<MyServices> {
           Constants.sizedBox(height: 12.0),
           Text(
             body,
-            style: AppTextStyle.normalStyle(fontSize: 14.0),
+            style: AppTextStyle.normalStyle(fontSize: 12.0),
             textAlign: TextAlign.center,
           ),
           Constants.sizedBox(height: 20.0),
@@ -270,5 +273,11 @@ class _MyServicesState extends State<MyServices> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _onTapNotifier.dispose();
+    super.dispose();
   }
 }

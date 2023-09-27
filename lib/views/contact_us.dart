@@ -1,7 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import '../globals/app_button.dart';
-import '../globals/app_colors.dart';
+import '../globals/palette.dart';
 import '../globals/app_text_style.dart';
 import '../globals/constants.dart';
 import '../helper_class/helper_class.dart';
@@ -24,7 +24,7 @@ class ContactUs extends StatelessWidget {
             color: Colors.transparent,
             elevation: 8,
             child: TextField(
-              cursorColor: AppColors.white,
+              cursorColor: Palette.whiteColor,
               style: AppTextStyle.normalStyle(),
               decoration: buildInputDecoration(hintText: 'Full Name'),
             ),
@@ -35,7 +35,7 @@ class ContactUs extends StatelessWidget {
             color: Colors.transparent,
             elevation: 8,
             child: TextField(
-              cursorColor: AppColors.white,
+              cursorColor: Palette.whiteColor,
               style: AppTextStyle.normalStyle(),
               decoration: buildInputDecoration(hintText: 'Email Address'),
             ),
@@ -46,7 +46,7 @@ class ContactUs extends StatelessWidget {
             color: Colors.transparent,
             elevation: 8,
             child: TextField(
-              cursorColor: AppColors.white,
+              cursorColor: Palette.whiteColor,
               style: AppTextStyle.normalStyle(),
               decoration: buildInputDecoration(hintText: 'Mobile Number'),
             ),
@@ -57,7 +57,7 @@ class ContactUs extends StatelessWidget {
             color: Colors.transparent,
             elevation: 8,
             child: TextField(
-              cursorColor: AppColors.white,
+              cursorColor: Palette.whiteColor,
               style: AppTextStyle.normalStyle(),
               decoration: buildInputDecoration(hintText: 'Email Subject'),
             ),
@@ -69,7 +69,7 @@ class ContactUs extends StatelessWidget {
             elevation: 8,
             child: TextField(
               maxLines: 15,
-              cursorColor: AppColors.white,
+              cursorColor: Palette.whiteColor,
               style: AppTextStyle.normalStyle(),
               decoration: buildInputDecoration(hintText: 'Your Message'),
             ),
@@ -83,7 +83,7 @@ class ContactUs extends StatelessWidget {
       tablet: buildForm(),
       desktop: buildForm(),
       paddingWidth: size.width * 0.2,
-      bgColor: AppColors.bgColor,
+      bgColor: Palette.bgColor,
     );
   }
 
@@ -102,7 +102,7 @@ class ContactUs extends StatelessWidget {
                 color: Colors.transparent,
                 elevation: 8,
                 child: TextField(
-                  cursorColor: AppColors.white,
+                  cursorColor: Palette.whiteColor,
                   style: AppTextStyle.normalStyle(),
                   decoration: buildInputDecoration(hintText: 'Full Name'),
                 ),
@@ -115,7 +115,7 @@ class ContactUs extends StatelessWidget {
                 color: Colors.transparent,
                 elevation: 8,
                 child: TextField(
-                  cursorColor: AppColors.white,
+                  cursorColor: Palette.whiteColor,
                   style: AppTextStyle.normalStyle(),
                   decoration: buildInputDecoration(hintText: 'Email Address'),
                 ),
@@ -132,7 +132,7 @@ class ContactUs extends StatelessWidget {
                 color: Colors.transparent,
                 elevation: 8,
                 child: TextField(
-                  cursorColor: AppColors.white,
+                  cursorColor: Palette.whiteColor,
                   style: AppTextStyle.normalStyle(),
                   decoration: buildInputDecoration(hintText: 'Mobile Number'),
                 ),
@@ -145,7 +145,7 @@ class ContactUs extends StatelessWidget {
                 color: Colors.transparent,
                 elevation: 8,
                 child: TextField(
-                  cursorColor: AppColors.white,
+                  cursorColor: Palette.whiteColor,
                   style: AppTextStyle.normalStyle(),
                   decoration: buildInputDecoration(hintText: 'Email Subject'),
                 ),
@@ -160,7 +160,7 @@ class ContactUs extends StatelessWidget {
           elevation: 8,
           child: TextField(
             maxLines: 15,
-            cursorColor: AppColors.white,
+            cursorColor: Palette.whiteColor,
             style: AppTextStyle.normalStyle(),
             decoration: buildInputDecoration(hintText: 'Your Message'),
           ),
@@ -184,7 +184,7 @@ class ContactUs extends StatelessWidget {
             TextSpan(
               text: 'Me!',
               style: AppTextStyle.headingStyle(
-                  fontSize: 30, color: AppColors.robinEdgeBlue),
+                  fontSize: 30, color: Palette.bgColor),
             )
           ],
         ),
@@ -203,7 +203,7 @@ class ContactUs extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide.none),
         filled: true,
-        fillColor: AppColors.bgColor2,
+        fillColor: Palette.mainColor,
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 24, vertical: 16));
   }

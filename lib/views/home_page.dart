@@ -1,14 +1,13 @@
-import 'dart:developer';
-
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:my_portfolio/globals/app_colors.dart';
+import 'package:my_portfolio/globals/palette.dart';
 import 'package:my_portfolio/globals/constants.dart';
 import 'package:my_portfolio/widgets/profile_animation.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../contents/my_contents.dart';
 import '../contents/my_project_data.dart' show socialMediaList;
+import '../globals/app_button.dart';
 import '../globals/app_text_style.dart';
 import '../helper_class/helper_class.dart';
 
@@ -22,7 +21,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final socialButtons = socialMediaList;
 
-  var socialBI;
+  int? socialBI;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +36,7 @@ class _HomePageState extends State<HomePage> {
       ),
       tablet: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(child: buildHomePersonalInfo(size)),
           const ProfileAnimation(),
@@ -46,7 +45,7 @@ class _HomePageState extends State<HomePage> {
      
       desktop: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(child: buildHomePersonalInfo(size)),
           const ProfileAnimation(),
@@ -62,24 +61,27 @@ class _HomePageState extends State<HomePage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        FadeInDown(
-          duration: const Duration(milliseconds: 1200),
+        FadeInLeft(
+          duration: const Duration(milliseconds: 1000),
+          delay: const Duration(milliseconds: 100),
           child: Text(
             'Hello, It\'s Me',
             style: AppTextStyle.montserratStyle(color: Colors.white),
           ),
         ),
-        Constants.sizedBox(height: 15.0),
-        FadeInRight(
-          duration: const Duration(milliseconds: 1400),
+        Constants.sizedBox(height: 11.0),
+        FadeInLeft(
+          duration: const Duration(milliseconds: 1000),
+          delay: const Duration(milliseconds: 100),
           child: Text(
             'Ashim A',
             style: AppTextStyle.montserratStyle(fontSize: 36),
           ),
         ),
-        Constants.sizedBox(height: 15.0),
+        Constants.sizedBox(height: 11.0),
         FadeInLeft(
-          duration: const Duration(milliseconds: 1400),
+          duration: const Duration(milliseconds: 1000),
+          delay: const Duration(milliseconds: 100),
           child: Row(
             children: [
               Text(
@@ -89,17 +91,18 @@ class _HomePageState extends State<HomePage> {
               Text(
               'Flutter Developer',
               style: AppTextStyle.headingStyle(
-                fontSize: 24, color: AppColors.robinEdgeBlue),
+                fontSize: 24, color: Palette.mainColor),
               )            
             ],
           ),
         ),
-        Constants.sizedBox(height: 15.0),
-        FadeInDown(
-          duration: const Duration(milliseconds: 1600),
+        Constants.sizedBox(height: 11.0),
+        FadeInLeft(
+          duration: const Duration(milliseconds: 1000),
+          delay: const Duration(milliseconds: 100),
           child: Text(
             MyContents.introduction,
-            style: AppTextStyle.normalStyle(),
+            style: AppTextStyle.normalStyle(fontSize: 13.5),
           ),
         ),
         Constants.sizedBox(height: 22.0),
@@ -114,7 +117,6 @@ class _HomePageState extends State<HomePage> {
               return InkWell(
                 onTap: () async {
                   final Uri url = Uri.parse(socialButtons[index].socialMediaLink);
-                  log(url.toString());
                   await launchUrl(url);
                 },
                 onHover: (value) {
@@ -127,8 +129,8 @@ class _HomePageState extends State<HomePage> {
                   });
                 },
                 borderRadius: BorderRadius.circular(550.0),
-                hoverColor: AppColors.themeColor,
-                splashColor: AppColors.lawGreen,
+                hoverColor: Palette.mainColor,
+                splashColor: Palette.whiteColor,
                 child: buildSocialButton(
                     index: index,
                     asset: socialButtons[index].socialMediaIcon,
@@ -138,11 +140,16 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         Constants.sizedBox(height: 18.0),
-        // FadeInUp(
-        //   duration: const Duration(milliseconds: 1800),
-        //   child: AppButtons.buildMaterialButton(
-        //       onTap: () {}, buttonName: 'Download CV'),
-        // ),
+        FadeInLeft(
+          duration: const Duration(milliseconds: 1000),
+          delay: const Duration(milliseconds: 100),
+          child: AppButtons.buildMaterialButton(
+              onTap: () async {
+                final Uri url = Uri.parse('https://firebasestorage.googleapis.com/v0/b/my-portfolio-ed780.appspot.com/o/portfolio%2FAshim_flutter_developer.pdf?alt=media&token=80fff918-5c31-4538-adbc-b84139ad7435');
+                await launchUrl(url);
+              }, 
+              buttonName: 'Download CV'),
+        ),
       ],
     );
   }
@@ -152,20 +159,22 @@ class _HomePageState extends State<HomePage> {
       width: 45,
       height: 45,
       decoration: BoxDecoration(
-        border: Border.all(color: AppColors.themeColor, width: 2.0),
-        color: AppColors.bgColor,
+        border: Border.all(color: Palette.mainColor, width: 2.0),
+        color: Palette.bgColor,
         shape: BoxShape.circle,
       ),
       padding: const EdgeInsets.all(6),
-      child: FadeInUp(
-        duration: const Duration(milliseconds: 1000),
-        delay: Duration(milliseconds: 600*index),
-        child: Image.asset(
-          asset,
-          width: 10,
-          height: 12,
-          color: hover ? AppColors.bgColor : AppColors.themeColor,
-          // fit: BoxFit.fill,
+      child: Center(
+        child: FadeInUp(
+          duration: const Duration(milliseconds: 1000),
+          delay: Duration(milliseconds: 1600+(200*index)),
+          child: Image.asset(
+            asset,
+            width: 25,
+            height: 25,
+            color: hover ? Palette.bgColor : Palette.mainColor,
+            // fit: BoxFit.fill,
+          ),
         ),
       ),
     );

@@ -1,3 +1,43 @@
+import '../globals/app_assets.dart';
+
+
+final Map<ServiceType, MyServiceData> myServicesMap = {
+                  ServiceType.android: MyServiceData(
+                                    icon: AppAssets.logoAndroid, 
+                                    title: 'Android Development', 
+                                    content: MyContents.android, 
+                                    type: ServiceType.android,
+                                  ),
+                  ServiceType.iOS: MyServiceData(
+                                    icon: AppAssets.logoiOS, 
+                                    title: 'iOS Development', 
+                                    content: MyContents.iOS, 
+                                    type: ServiceType.iOS,
+                                  ),
+                  ServiceType.web: MyServiceData(
+                                    icon: AppAssets.logoWeb, 
+                                    title: 'Web Development', 
+                                    content: MyContents.web, 
+                                    type: ServiceType.web,
+                                  ),
+                };
+
+class MyServiceData {
+  final String icon;
+  final String title;
+  final String content;
+  final ServiceType type;
+
+  const MyServiceData({
+    required this.icon,
+    required this.title,
+    required this.content,
+    required this.type,
+  });
+}
+
+enum ServiceType { android, iOS, web}
+
 class MyContents{
   static const introduction = 'Welcome to my digital atelier, elegance meets code to orchestrate captivating visual experiences. In this Flutter-powered world, innovation meets pixel-perfect design, resulting in immersive user experiences that captivate and inspire. I invite you to embark on a journey through my portfolio, where the magic of Flutter transforms ideas into vibrant, interactive realities. Explore the wonders crafted in this space, and let\'s bring your next digital vision to life.';
 

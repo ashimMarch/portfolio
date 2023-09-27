@@ -19,7 +19,7 @@ class _ProfileAnimationState extends State<ProfileAnimation> with SingleTickerPr
         AnimationController(vsync: this, duration: const Duration(seconds: 3))
           ..repeat(reverse: true);
 
-    _animation = Tween(begin: const Offset(0,0.05), end: const Offset(0, 0))
+    _animation = Tween(begin: const Offset(0,0.08), end: const Offset(0, 0))
         .animate(_controller);
   }
   @override
@@ -28,8 +28,8 @@ class _ProfileAnimationState extends State<ProfileAnimation> with SingleTickerPr
       position: _animation,
       child: Image.asset(
         AppAssets.profile1,
-        width: 360,
-        height: 390,
+        width: 350,
+        height: 350,
       ),
     );
   }

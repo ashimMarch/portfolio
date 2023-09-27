@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/contents/my_project_data.dart' show ProjectModel;
-import 'package:my_portfolio/globals/app_colors.dart';
+import 'package:my_portfolio/globals/palette.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../globals/app_assets.dart';
@@ -38,8 +38,7 @@ class _ProjectDataCardState extends State<ProjectDataCard> with SingleTickerProv
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        final Uri url = Uri.parse(project.playStoreLink);
-        await launchUrl(url);
+        
       },
       onHover: (value) {
         if (value) {
@@ -59,7 +58,7 @@ class _ProjectDataCardState extends State<ProjectDataCard> with SingleTickerProv
             fit: BoxFit.cover,
           ),
           boxShadow: const [
-            BoxShadow(blurRadius: 15,spreadRadius: 5,color: AppColors.bgColor,offset: Offset(0,10))
+            BoxShadow(blurRadius: 15,spreadRadius: 5,color: Palette.bgColor,offset: Offset(0,10))
           ],
           borderRadius: BorderRadius.circular(15)
         ),
@@ -95,8 +94,8 @@ class _ProjectDataCardState extends State<ProjectDataCard> with SingleTickerProv
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            AppColors.themeColor.withOpacity(0.9),
-                            AppColors.themeColor.withOpacity(0.1),
+                            Palette.mainColor.withOpacity(0.9),
+                            Palette.mainColor.withOpacity(0.1),
                           ],
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter
@@ -116,18 +115,35 @@ class _ProjectDataCardState extends State<ProjectDataCard> with SingleTickerProv
                     return FadeInUp(
                       animate: value,
                       duration: const Duration(milliseconds: 900),
-                      child: RichText(
-                        text: TextSpan(
-                          text: '${project.projectName}\n',
-                          style: AppTextStyle.headingStyle(fontSize: 22.0),
-                          children: [
-                            TextSpan(
-                              text: project.projectDetiles,
-                              style: AppTextStyle.normalStyle(fontSize: 14.0)
-                            )
-                          ],
-                        ),
-                        textAlign: TextAlign.center,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                              text: '${project.projectName}\n',
+                              style: AppTextStyle.headingStyle(fontSize: 22.0),
+                              children: [
+                                TextSpan(
+                                  text: project.projectDetiles,
+                                  style: AppTextStyle.normalStyle(fontSize: 12.0)
+                                )
+                              ],
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 10,),
+                          InkWell(
+                            onTap: () async {
+                              final Uri url = Uri.parse(project.playStoreLink);
+                              await launchUrl(url);
+                            },
+                            child: const CircleAvatar(
+                              maxRadius: 20,
+                              backgroundColor: Palette.whiteColor,
+                              child: Icon(Icons.ios_share_outlined,color: Palette.mainColor,)
+                            ),
+                          )
+                        ],
                       ),
                     );
                   }
@@ -174,18 +190,9 @@ class _ProjectDataCardMobileState extends State<ProjectDataCardMobile> with Sing
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () async {
-        final Uri url = Uri.parse(project.playStoreLink);
-        await launchUrl(url);
-      },
-      onHover: (value) {
-        if (value) {
-            _controller.forward();
-            animateText.value = value;
-        } else {
-            _controller.reverse();
-            animateText.value = value;
-        }
+      onTap: (){
+        _controller.forward();
+        animateText.value = true;
       },
       child: Container(
         width: 350,
@@ -196,7 +203,7 @@ class _ProjectDataCardMobileState extends State<ProjectDataCardMobile> with Sing
             fit: BoxFit.cover,
           ),
           boxShadow: const [
-            BoxShadow(blurRadius: 15,spreadRadius: 5,color: AppColors.bgColor,offset: Offset(0,10))
+            BoxShadow(blurRadius: 15,spreadRadius: 5,color: Palette.bgColor,offset: Offset(0,10))
           ],
           borderRadius: BorderRadius.circular(15)
         ),
@@ -221,6 +228,7 @@ class _ProjectDataCardMobileState extends State<ProjectDataCardMobile> with Sing
                   ),
                 ),
               ),
+              
               AnimatedBuilder(
                 animation: _animation,
                 builder: (context, _) {
@@ -228,23 +236,30 @@ class _ProjectDataCardMobileState extends State<ProjectDataCardMobile> with Sing
                     duration: const Duration(milliseconds: 400),
                     curve: Curves.easeOutCubic,
                     top: -300*_animation.value,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            AppColors.themeColor.withOpacity(0.9),
-                            AppColors.themeColor.withOpacity(0.1),
-                          ],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter
-                        )
+                    child: InkWell(
+                      onTap: () {
+                        _controller.reverse();
+                        animateText.value = false;
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Palette.mainColor,
+                              Palette.mainColor.withOpacity(0.4),
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter
+                          )
+                        ),
+                        width: 400,
+                        height: 300,
                       ),
-                      width: 400,
-                      height: 300,
                     ),
                   );
                 }
               ),
+              
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: ValueListenableBuilder(
@@ -263,30 +278,24 @@ class _ProjectDataCardMobileState extends State<ProjectDataCardMobile> with Sing
                               children: [
                                 TextSpan(
                                   text: project.projectDetiles,
-                                  style: AppTextStyle.normalStyle(fontSize: 14.0)
+                                  style: AppTextStyle.normalStyle(fontSize: 12.0)
                                 )
                               ],
                             ),
                             textAlign: TextAlign.center,
                           ),
-                          // const SizedBox(height: 10,),
-                          // InkWell(
-                          //   onTap: () async {
-                          //     final Uri url = Uri.parse(project.playStoreLink);
-                          //     await launchUrl(url);
-                          //   },
-                          //   child: CircleAvatar(
-                          //   maxRadius: 20,
-                          //   backgroundColor: Colors.white,
-                          //   child: Icon(Icons.ios_share_sharp)
-                          //   // Image.asset(
-                          //   //   AppAssets.share,
-                          //   //   width: 20,
-                          //   //   height: 20,
-                          //   //   fit: BoxFit.fill,
-                          //   // ),
-                          //                         ),
-                          // )
+                          const SizedBox(height: 10,),
+                          InkWell(
+                            onTap: () async {
+                              final Uri url = Uri.parse(project.playStoreLink);
+                              await launchUrl(url);
+                            },
+                            child: const CircleAvatar(
+                              maxRadius: 20,
+                              backgroundColor: Palette.whiteColor,
+                              child: Icon(Icons.ios_share_outlined,color: Palette.mainColor,)
+                            ),
+                          )
                         ],
                       ),
                     );

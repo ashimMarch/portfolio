@@ -6,9 +6,9 @@ class AppAssets {
   // static String profile1 = 'assets/images/my_avatar2.png';
   // static String profile2 = 'assets/images/my_avatar3.png';
 
-  static String profile1 = 'assets/images/avatar_gradient.png';
+  static String profile1 = 'assets/images/avatar_purple1.png';
   // static String profile3 = 'assets/images/avatar_borderles.png';
-  static String profile2 = 'assets/images/avatar_for_border.png';
+  static String profile2 = 'assets/images/avatar_purple2.png';
   static String profile3 = 'assets/images/avatar_circle.png';
 
 
@@ -34,7 +34,9 @@ class SocialMediaAssets{
 }
 
 class CardBackground {
-  static const cardBg = 'assets/images/project_background/card_bg.jpg';
+  static const cardBg = 'assets/images/project_background/bbg2.png';
+  
+  // static const cardBg = 'assets/images/project_background/card_bg.jpg';
 }
 
 class MyProjectImage {
