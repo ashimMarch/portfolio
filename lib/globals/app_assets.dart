@@ -1,14 +1,10 @@
 class AppAssets {
-  // static String profile1 = 'assets/images/pro1.png';
-  // static String profile2 = 'assets/images/pro2.png';
-
-  // static String profile1 = 'assets/images/my_avatar.png';
-  // static String profile1 = 'assets/images/my_avatar2.png';
-  // static String profile2 = 'assets/images/my_avatar3.png';
-
-  static String profile1 = 'assets/images/avatar_purple1.png';
-  // static String profile3 = 'assets/images/avatar_borderles.png';
-  static String profile2 = 'assets/images/avatar_purple2.png';
+  // static String profile1 = 'assets/images/avatar_purple1.png';
+  // static String profile1 = 'assets/images/avatar_purple2.png';
+  static String profile1 = 'assets/images/project_background/random_shape_2.png';
+  // static String profile2 = 'assets/images/avatar_purple2.png';
+  static String profile2 = 'assets/images/about_me.png';
+// 
   static String profile3 = 'assets/images/avatar_circle.png';
 
 
@@ -22,6 +18,7 @@ class AppAssets {
   static String logoAndroid = 'assets/images/logo_android.png';
   static String logoiOS = 'assets/images/logo_ios.png';
   static String logoWeb = 'assets/images/logo_web.png';
+  static String arrow = 'assets/images/arrow_extra_dark.png';
 }
 
 
@@ -29,14 +26,12 @@ class SocialMediaAssets{
   static String facebook = 'assets/images/face.png';
   static String github = 'assets/images/git.png';
   static String linkedIn = 'assets/images/in.png';
-  static String instagram = 'assets/images/insta.png';
+  static String email = 'assets/images/email.png';
   static String whatsapp = 'assets/images/whatsapp.png';
 }
 
 class CardBackground {
-  static const cardBg = 'assets/images/project_background/bbg2.png';
-  
-  // static const cardBg = 'assets/images/project_background/card_bg.jpg';
+  static const cardBg = 'assets/images/project_background/qwerty3.jpg';
 }
 
 class MyProjectImage {

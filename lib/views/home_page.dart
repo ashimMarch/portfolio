@@ -19,7 +19,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final socialButtons = socialMediaList;
+  final _socialMedia = socialMediaList;
 
   int? socialBI;
 
@@ -34,6 +34,7 @@ class _HomePageState extends State<HomePage> {
           const ProfileAnimation()
         ],
       ),
+      
       tablet: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -61,62 +62,66 @@ class _HomePageState extends State<HomePage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        FadeInLeft(
+        FadeIn(
           duration: const Duration(milliseconds: 1000),
-          delay: const Duration(milliseconds: 100),
           child: Text(
             'Hello, It\'s Me',
-            style: AppTextStyle.montserratStyle(color: Colors.white),
+            style: GoogleFontStyle.whiteHeading()
           ),
         ),
-        Constants.sizedBox(height: 11.0),
-        FadeInLeft(
-          duration: const Duration(milliseconds: 1000),
-          delay: const Duration(milliseconds: 100),
+        kHeight5,
+        FadeIn(
+          duration: const Duration(milliseconds: 1500),
+          delay: const Duration(milliseconds: 800),
           child: Text(
             'Ashim A',
-            style: AppTextStyle.montserratStyle(fontSize: 36),
+            style: AppTextStyle.montserratStyle(
+              fontSize: 36,
+              color: Palette.mainColor
+            ),
           ),
         ),
-        Constants.sizedBox(height: 11.0),
-        FadeInLeft(
-          duration: const Duration(milliseconds: 1000),
-          delay: const Duration(milliseconds: 100),
+        kHeight5,
+        FadeIn(
+          duration: const Duration(milliseconds: 1500),
+          delay: const Duration(milliseconds: 1300),
           child: Row(
             children: [
               Text(
-                'And I\'m a ',
-                style: AppTextStyle.montserratStyle(color: Colors.white),
+                'and I\'m a ',
+                style: GoogleFontStyle.whiteHeading()
               ),
               Text(
               'Flutter Developer',
               style: AppTextStyle.headingStyle(
-                fontSize: 24, color: Palette.mainColor),
+                fontSize: 24, 
+                color: Palette.mainColor
+                ),
               )            
             ],
           ),
         ),
         Constants.sizedBox(height: 11.0),
-        FadeInLeft(
-          duration: const Duration(milliseconds: 1000),
-          delay: const Duration(milliseconds: 100),
+        FadeIn(
+          duration: const Duration(milliseconds: 1500),
+          delay: const Duration(milliseconds: 2000),
           child: Text(
             MyContents.introduction,
-            style: AppTextStyle.normalStyle(fontSize: 13.5),
+            style: AppTextStyle.normalStyle(),//fontSize: 13.5  
           ),
         ),
         Constants.sizedBox(height: 22.0),
         SizedBox(
           height: 48,
           child: ListView.separated(
-            itemCount: socialButtons.length,
+            itemCount: _socialMedia.length,
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             separatorBuilder: (context, child) => Constants.sizedBox(width: 8.0),
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () async {
-                  final Uri url = Uri.parse(socialButtons[index].socialMediaLink);
+                  final Uri url = Uri.parse(_socialMedia[index].socialMediaLink);
                   await launchUrl(url);
                 },
                 onHover: (value) {
@@ -133,16 +138,16 @@ class _HomePageState extends State<HomePage> {
                 splashColor: Palette.whiteColor,
                 child: buildSocialButton(
                     index: index,
-                    asset: socialButtons[index].socialMediaIcon,
+                    asset: _socialMedia[index].socialMediaIcon,
                     hover: socialBI == index ? true : false),
               );
             },
           ),
         ),
         Constants.sizedBox(height: 18.0),
-        FadeInLeft(
-          duration: const Duration(milliseconds: 1000),
-          delay: const Duration(milliseconds: 100),
+        FadeIn(
+          duration: const Duration(milliseconds: 1500),
+          delay: const Duration(milliseconds: 2700),
           child: AppButtons.buildMaterialButton(
               onTap: () async {
                 final Uri url = Uri.parse('https://firebasestorage.googleapis.com/v0/b/my-portfolio-ed780.appspot.com/o/portfolio%2FAshim_flutter_developer.pdf?alt=media&token=80fff918-5c31-4538-adbc-b84139ad7435');
@@ -154,7 +159,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Ink buildSocialButton({required String asset, required bool hover, required int index}) {
+  Widget buildSocialButton({required String asset, required bool hover, required int index}) {
     return Ink(
       width: 45,
       height: 45,
@@ -167,7 +172,7 @@ class _HomePageState extends State<HomePage> {
       child: Center(
         child: FadeInUp(
           duration: const Duration(milliseconds: 1000),
-          delay: Duration(milliseconds: 1600+(200*index)),
+          delay: Duration(milliseconds: 2500+(200*index)),
           child: Image.asset(
             asset,
             width: 25,

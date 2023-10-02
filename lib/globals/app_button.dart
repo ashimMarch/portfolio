@@ -24,7 +24,7 @@ class AppButtons{
       splashColor: Palette.mainColor,
       child: Text(
         buttonName,
-        style: AppTextStyle.headerTextStyle(fontSize: 12),
+        style: GoogleFontStyle.buttonStyle(),
       ),
     );
   }

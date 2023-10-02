@@ -208,12 +208,11 @@ void initState() {
       child: RichText(
         text: TextSpan(
           text: 'My ',
-          style: AppTextStyle.headingStyle(fontSize: 30.0),
+          style: GoogleFontStyle.mainTitleText1(),
           children: [
             TextSpan(
               text: 'Services',
-              style: AppTextStyle.headingStyle(
-                  fontSize: 30.0, color: Palette.mainColor),
+              style: GoogleFontStyle.mainTitleText2(),
             )
           ],
         ),
@@ -232,7 +231,7 @@ void initState() {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       width: hover ? hoverWidth : width,
-      height: hover ? 390 : 380,
+      height: hover ? 430 : 420,
       alignment: Alignment.center,
       transform: hover ? onHoverActive : onHoverRemove,
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 24),
@@ -256,16 +255,17 @@ void initState() {
             height: 50,
             color: Palette.mainColor,
           ),
-          Constants.sizedBox(height: 30.0),
+          Constants.sizedBox(height: 10.0),
           Text(
             title,
             style: AppTextStyle.montserratStyle(
-                color: Colors.white, fontSize: 22.0),
+                color: Colors.white, 
+                fontSize: 21.0),
           ),
           Constants.sizedBox(height: 12.0),
           Text(
             body,
-            style: AppTextStyle.normalStyle(fontSize: 12.0),
+            style: AppTextStyle.normalStyle(fontSize: 14.5),
             textAlign: TextAlign.center,
           ),
           Constants.sizedBox(height: 20.0),

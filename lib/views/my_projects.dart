@@ -32,49 +32,37 @@ class _MyProjectsState extends State<MyProjects> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return Stack(
-      children: [
-        HelperClass(
-          mobile: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              buildProjectText(),
-              Constants.sizedBox(height: 40.0),
-              wrapBuilder(),
-            ],
-          ),
-          tablet: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              buildProjectText(),
-              Constants.sizedBox(height: 40.0),
-              wrapBuilder(),
-            ],
-          ),
-          desktop: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              buildProjectText(),
-              Constants.sizedBox(height: 40.0),
-              wrapBuilder(),
-            ],
-          ),
-          paddingWidth: size.width * 0.1,
-          bgColor: Palette.bgColor,
-        ),
-        Positioned(
-          bottom: 0,
-          child: Container(
-            width: size.width,
-            height: 40,
-            color: Palette.mainColor,
-          ),
-        )
-      ],
+    return HelperClass(
+      mobile: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          buildProjectText(),
+          Constants.sizedBox(height: 40.0),
+          wrapBuilder(),
+        ],
+      ),
+      tablet: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          buildProjectText(),
+          Constants.sizedBox(height: 40.0),
+          wrapBuilder(),
+        ],
+      ),
+      desktop: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          buildProjectText(),
+          Constants.sizedBox(height: 40.0),
+          wrapBuilder(),
+        ],
+      ),
+      paddingWidth: size.width * 0.1,
+      bgColor: Palette.bgColor,
     );
   }
 
-  Widget wrapBuilder({bool isMobile = false}){
+  Widget wrapBuilder(){
     return Wrap(
       runSpacing: 25,spacing: 25,
       runAlignment: WrapAlignment.center,
@@ -82,9 +70,7 @@ class _MyProjectsState extends State<MyProjects> {
       direction: Axis.horizontal,
       children: List.generate(
         projectList.length, 
-        (index) =>  isMobile ? ProjectDataCardMobile(
-          project: projectList[index],
-        ): ProjectDataCard(project: projectList[index])
+        (index) =>  ProjectDataCard(project: projectList[index])
       ),
     );
   }

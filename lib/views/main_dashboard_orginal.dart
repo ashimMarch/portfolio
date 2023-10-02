@@ -13,6 +13,8 @@ import '../globals/app_text_style.dart';
 import '../globals/constants.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
+import 'contact_us.dart';
+
 class MainDashBoardOrginal extends StatefulWidget {
   const MainDashBoardOrginal({Key? key}) : super(key: key);
 
@@ -48,6 +50,7 @@ class _MainDashBoardOrginalState extends State<MainDashBoardOrginal> {
       AboutMe(itemScrollController: _itemScrollController),
       const MyServices(),
       const MyProjects(),
+      const Contact(),
     ];
     
   }
@@ -91,9 +94,9 @@ class _MainDashBoardOrginalState extends State<MainDashBoardOrginal> {
                   return Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      const Text(
+                      Text(
                         'Portfolio.',
-                        style: TextStyle(color: Palette.mainColor),
+                        style: AppTextStyle.iconText()
                       ),
                       const Spacer(),
                       PopupMenuButton(
@@ -126,9 +129,10 @@ class _MainDashBoardOrginalState extends State<MainDashBoardOrginal> {
                   return Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      const Text(
+                      Text(
                         'Portfolio.',
-                        style: TextStyle(color: Palette.mainColor),
+                        style: AppTextStyle.iconText()
+                        // TextStyle(color: Palette.mainColor),
                       ),
                       const Spacer(),
                       BlocBuilder<MainMenuCubit, MainMenuState>(
@@ -198,6 +202,7 @@ class _MainDashBoardOrginalState extends State<MainDashBoardOrginal> {
         menuItems[index],
         style: AppTextStyle.headerTextStyle(
           color: hover ? Palette.mainColor : Palette.whiteColor,
+          fontSize: hover ? 17 : 14,
         ),
       ),
     );

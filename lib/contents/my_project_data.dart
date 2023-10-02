@@ -23,7 +23,7 @@ final projectList = [
   ),
   ProjectModel(
     projectName: 'nic', 
-    projectDetiles: 'One-stop platform for buying and selling a wide range of items and services. Whether you\'re in the market for realestate, vehicles, job opportunities, or more, this application offers a comprehensive solution for your buying and selling needs.', 
+    projectDetiles: 'One-stop platform for buying and selling a wide range of items and services. Whether you\'re in the market for realestate, vehicles, or more, this application offers a comprehensive solution for your buying and selling needs.', 
     projectIcon: MyProjectImage.nic,
     playStoreLink: ''
   ),
@@ -64,11 +64,7 @@ final socialMediaList = [
     socialMediaLink: 'https://wa.me/+917560951397/?text=Hi, I am contacting from your portfolio.'
   ),
   SocialMediaModel(
-    socialMediaIcon: SocialMediaAssets.instagram, 
-    socialMediaLink: 'https://instagram.com/muhd_ashim?igshid=OGQ5ZDc2ODk2ZA=='
+    socialMediaIcon: SocialMediaAssets.email, 
+    socialMediaLink: 'mailto:ashim8696@gmail.com'
   ),
 ];
-  // SocialMediaModel(
-  //   socialMediaIcon: SocialMediaAssets.facebook, 
-  //   socialMediaLink: ''
-  // ),

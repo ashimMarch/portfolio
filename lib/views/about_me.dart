@@ -26,9 +26,9 @@ class _AboutMeState extends State<AboutMe> {
     return HelperClass(
       mobile: Column(
         children: [
-          buildAboutMeContents(),
-          Constants.sizedBox(height: 35.0),
-          buildProfilePicture(),
+          buildAboutMeContents(isMobile: true),
+          // kHeight10,
+          // buildProfilePicture(height: 230),
         ],
       ),
       tablet: Row(
@@ -52,39 +52,44 @@ class _AboutMeState extends State<AboutMe> {
     );
   }
 
-  FadeInRight buildProfilePicture() {
+  FadeInRight buildProfilePicture({double height = 500}) {
     return FadeInRight(
       duration: const Duration(milliseconds: 1200),
       child: Image.asset(
         AppAssets.profile2,
-        height: 500,
+        height: height,
       ),
     );
   }
 
   // Widget buildProfilePicture() {
-  Column buildAboutMeContents() {
+  Column buildAboutMeContents({bool isMobile = false}) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
+        kHeight10,
         FadeInRight(
           duration: const Duration(milliseconds: 1200),
           child: RichText(
             text: TextSpan(
               text: 'About ',
-              style: AppTextStyle.headingStyle(fontSize: 32.0),
+              style: GoogleFontStyle.mainTitleText1(),
               children: [
                 TextSpan(
                   text: 'Me!',
-                  style: AppTextStyle.headingStyle(
-                      fontSize: 32, color: Palette.mainColor),
+                  style: GoogleFontStyle.mainTitleText2(),
                 )
               ],
             ),
           ),
         ),
-        Constants.sizedBox(height: 10.0),
+        
+
+        isMobile ? Constants.sizedBox(height: 35.0) : kHeight10,
+      
+        if(isMobile) buildProfilePicture(height: 230),
+        kHeight10,
         FadeInLeft(
           duration: const Duration(milliseconds: 1400),
           child: Text(
@@ -92,20 +97,20 @@ class _AboutMeState extends State<AboutMe> {
             style: AppTextStyle.normalStyle(),
           ),
         ),
-        Constants.sizedBox(height: 15.0),
-        FadeInUp(
-          duration: const Duration(milliseconds: 1800),
-          child: AppButtons.buildMaterialButton(
-              onTap: () {
-                widget.itemScrollController.scrollTo(
-                index: 2,
-                duration: const Duration(seconds: 2),
-                curve: Curves.fastLinearToSlowEaseIn
-                ).whenComplete(() => context.read<MainMenuCubit>().onSelectedMenu(2));
-              }, 
-              buttonName: 'Read More',
-          ),
-        )
+        // Constants.sizedBox(height: 15.0),
+        // FadeInUp(
+        //   duration: const Duration(milliseconds: 1800),
+        //   child: AppButtons.buildMaterialButton(
+        //       onTap: () {
+        //         widget.itemScrollController.scrollTo(
+        //         index: 2,
+        //         duration: const Duration(seconds: 2),
+        //         curve: Curves.fastLinearToSlowEaseIn
+        //         ).whenComplete(() => context.read<MainMenuCubit>().onSelectedMenu(2));
+        //       }, 
+        //       buttonName: 'Read More',
+        //   ),
+        // )
       ],
     );
   }
